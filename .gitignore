@@ -3,11 +3,11 @@
 
 
 # ==========================================
-# Environnement virtuel & uv
+# Environnement virtuel & uv & cle
 # ==========================================
 .venv
 .uv/
-
+.env
 
 # ==========================================
 # Jupyter & Notebooks

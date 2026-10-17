@@ -5,9 +5,24 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "accelerate>=1.15.0",
     "faiss-cpu>=1.15.0",
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
     "langchain>=1.4.0",
+    "langchain-classic>=1.0.8",
     "langchain-community>=0.4.2",
+    "langchain-huggingface>=1.2.3",
+    "langchain-mistralai>=1.1.6",
+    "load-dotenv>=0.1.0",
+    "matplotlib>=3.11.2",
+    "missingno>=0.5.2",
     "mistral>=23.0.0",
+    "mistralai>=3.2.0",
+    "mso>=1.0.86",
+    "pandas>=3.0.6",
+    "seaborn>=0.13.2",
     "sentence-transformers>=6.0.1",
+    "torch>=2.14.0",
+    "transformers>=5.17.0",
 ]
