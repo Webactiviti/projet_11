@@ -24,6 +24,7 @@ Clef API à se procurer
 
 Déroulement du programme
 
+```mermaid
 graph TD
     subgraph P1 ["Programme 1 : openagenda_v2.py (Collecte & Préparation)"]
         A[Chargement .env] --> B[Requête API OpenAgenda]
@@ -47,7 +48,7 @@ graph TD
     style P1 fill:#f9f,stroke:#333,stroke-width:2px
     style P2 fill:#bbf,stroke:#333,stroke-width:2px
 
-
+```
 
 # installation
 
