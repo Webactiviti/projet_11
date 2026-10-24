@@ -36,8 +36,8 @@ def fetch_agendas(search_query="Paris"):
 def fetch_events_for_agendas(agendas):
     """Parcourt les agendas pour récupérer les événements sur une période donnée."""
     now = datetime.now()
-    start_date = now - timedelta(days=182)
-    end_date = now + timedelta(days=182) # Ajustez selon vos besoins (ex: ~1 an au total)
+    start_date = now 
+    end_date = now + timedelta(days=200) # Ajustez selon vos besoins 
 
     all_events = []
     for agenda in agendas:
