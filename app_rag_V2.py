@@ -3,17 +3,29 @@
 
 import os
 import sys
+import warnings
+
+# Ignore spécifiquement l'avertissement de dépréciation de langchain-community
+warnings.filterwarnings(
+    "ignore", 
+    message=".*langchain-community.*is being sunset.*", 
+    category=DeprecationWarning
+)
 import getpass
 import pandas as pd
 import faiss
 from pathlib import Path
 from langchain_core.documents import Document
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS 
+
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mistralai import ChatMistralAI
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_classic.chains import RetrievalQA
 from dotenv import load_dotenv
+
+
+
 
 
 # ===============================================
@@ -151,12 +163,22 @@ def poser_question(qa_chain, question_utilisateur):
     except Exception as e:
         print(f"Erreur lors de l'exécution de la requête RAG : {e}")
         return None
-
-
+# ===============================================
+#  Efface l'écran de u terminal pour afficher
+#  seulement le dernier résultat
+# ===============================================
+def effacer_ecran():
+    """Efface l'écran du terminal selon le système d'exploitation."""
+    os.system('cls' if os.name == 'nt' else 'clear')
 # ===============================================
 # Bloc Principal d'Exécution
 # ===============================================
 if __name__ == "__main__":
+
+    # Efface l'écran avant de commencer
+    effacer_ecran()
+
+    
     fichier_csv = "./data/evenement.csv"
     
     # Charger les données du fichier csv

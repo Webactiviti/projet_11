@@ -62,6 +62,26 @@ graph TD
 
  5. Lancer la commande uv run jupyter lab : openagenda.ipynb pour lire un agenda et pour le RAG : app_rag.ipynb
 
+
+
+# liste des questions différentes pour le RAG
+
+    uv run python mquestion1.py 
+
+    uv run python mquestion2.py 
+
+    uv run python mquestion3.py 
+
+    uv run python mquestion4.py 
+
+    uv run python mquestion5.py 
+
+# test unitaire
+
+
+ 1. Lancer la commande :  uv run python -m pytest -v
+
+
 ## 📂 Structure du Répertoire
 
 ```text
@@ -78,5 +98,15 @@ projet_11
 ├── openagenda.ipynb                                # notebook gestion data openagenda
 ├── app_rag.ipynb                                   # notebook gestion RAG et gestion avec Mistral
 ├── example.env                                     # fichier exemple .env pour les clefs API
+├── openagenda_V2.py                                # gestion data openagenda
+├── app_rag_V2.py                                   # fichier gestion RAG
+├── maquestion1.py                                  # Question RAG N°1
+├── maquestion2.py                                  # Question RAG N°2
+├── maquestion3.py                                  # Question RAG N°3
+├── maquestion4.py                                  # Question RAG N°4
+├── maquestion5.py                                  # Question RAG N°5
+├── tests                                           # répertoire  de document 
+|    └── test_app.py                                # procédure de test 
+├── pytest.ini                                      # fichier de configuration de pytest
 └── README.md                                       # Documentation du projet
 ```

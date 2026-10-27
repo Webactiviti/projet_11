@@ -39,6 +39,24 @@ def executer_requete_rag(question_utilisateur):
         search_kwargs={"k": 3}
     )
 
+
+
+
+    # Interrogation directe du retriever FAISS (k=3 par défaut dans votre code)
+    documents_recuperes = retriever.invoke(question_utilisateur)
+
+    print(f"Pour la question : « {question_utilisateur} »")
+    print(f"Le retriever a sélectionné {len(documents_recuperes)} sources :\n")
+
+    for i, doc in enumerate(documents_recuperes, start=1):
+        print(f"[{i}] ID CSV : {doc.metadata.get('id')}")
+        print(f"    Titre  : {doc.metadata.get('titre')}")
+        print(f"    Texte  : {doc.page_content[:100]}...\n") # Aperçu du texte vectorisé
+
+
+
+
+
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
