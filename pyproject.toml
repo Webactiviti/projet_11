@@ -13,6 +13,7 @@ dependencies = [
     "langchain-classic>=1.0.8",
     "langchain-community>=0.4.2",
     "langchain-faiss>=0.1.1",
+    "langchain-google-genai>=4.5.3",
     "langchain-huggingface>=1.2.3",
     "langchain-mistralai>=1.1.6",
     "load-dotenv>=0.1.0",

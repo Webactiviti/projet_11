@@ -12,7 +12,7 @@ def executer_requete_rag(question_utilisateur):
 
     os.system('clear')
     """Charge l'index FAISS, configure le chatbot Mistral et pose la question."""
-    load_dotenv()
+    load_dotenv(override = True)
     
     # Vérification de la clé API Mistral
     if not os.getenv("MISTRAL_API_KEY"):

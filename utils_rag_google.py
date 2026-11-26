@@ -1,0 +1,88 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+import os
+from dotenv import load_dotenv
+from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_classic.chains import RetrievalQA
+
+
+def executer_requete_rag(question_utilisateur):
+    os.system('clear')
+    """Charge l'index FAISS, configure le chatbot Gemini et pose la question."""
+    load_dotenv(override=True)
+
+    # Vérification de la clé API Gemini
+    if not os.getenv("GOOGLE_API_KEY"):
+        raise ValueError("La clé API GOOGLE_API_KEY n'est pas définie dans l'environnement.")
+
+    # Chargement du modèle d'embedding
+    embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
+    # Chargement de la base vectorielle sauvegardée
+    db_faiss = FAISS.load_local(
+        "./data/index_openagenda_hnsw",
+        embeddings_model,
+        allow_dangerous_deserialization=True
+    )
+
+    # Configuration du Chatbot Gemini (modèle Flash / Flash-Lite éligible au palier gratuit)
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3.5-flash-lite",
+    )
+
+    retriever = db_faiss.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 3}
+    )
+
+    # Interrogation directe du retriever FAISS (k=3 par défaut dans votre code)
+    documents_recuperes = retriever.invoke(question_utilisateur)
+
+    print(f"Pour la question : « {question_utilisateur} »")
+    print(f"Le retriever a sélectionné {len(documents_recuperes)} sources :\n")
+
+    for i, doc in enumerate(documents_recuperes, start=1):
+        print(f"[{i}] ID CSV : {doc.metadata.get('id')}")
+        print(f"    Titre  : {doc.metadata.get('titre')}")
+        print(f"    Texte  : {doc.page_content[:100]}...\n")
+
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=retriever,
+        return_source_documents=True
+    )
+
+    # Exécution de la requête
+    print(f"\n💬 Question posée : « {question_utilisateur} »\n")
+    reponse = qa_chain.invoke({"query": question_utilisateur})
+
+    # Affichage formaté de la réponse et des sources
+    if reponse and "result" in reponse:
+        print("=" * 60)
+        print(" 🤖  RÉPONSE PERSONNALISÉE DE GEMINI ")
+        print("=" * 60)
+        print(reponse["result"].strip())
+        print("\n" + "-" * 60)
+        print(" 📚  ÉVÉNEMENTS SOURCES UTILISÉS (RAG) ")
+        print("-" * 60)
+
+        for i, doc in enumerate(reponse.get("source_documents", []), start=1):
+            titre = doc.metadata.get('titre', 'Titre non disponible')
+            lieu = doc.metadata.get('lieu', 'Lieu non spécifié')
+            ville = doc.metadata.get('ville', '')
+            url = doc.metadata.get('url', '')
+
+            print(f"[{i}] 📌 {titre}")
+            if ville:
+                print(f"    📍 Lieu   : {lieu} ({ville})")
+            else:
+                print(f"    📍 Lieu   : {lieu}")
+
+            if url:
+                print(f"    🔗 Lien   : {url}\n")
+            else:
+                print(f"    🔗 Lien   : Non disponible\n")
