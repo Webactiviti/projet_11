@@ -21,34 +21,12 @@ Clef API à se procurer
     - Openagenda
     - Hugging Face
     - Mistral AI
+    - GOOGLE_API_KEY
 
-Déroulement du programme
+# Déroulement du programme
 
-```mermaid
-graph TD
-    subgraph P1 ["Programme 1 : openagenda_v2.py (Collecte & Préparation)"]
-        A[Chargement .env] --> B[Requête API OpenAgenda]
-        B --> C[Récupération des Agendas et Événements]
-        C --> D[Normalisation et Nettoyage des données]
-        D --> E[Création du texte à vectoriser]
-        E --> F[Exportation : evenement.csv]
-    end
 
-    subgraph P2 ["Programme 2 : app_rag_v2.py (Indexation & RAG)"]
-        F --> G[Chargement du fichier CSV]
-        G --> H[Création des Documents LangChain et Métadonnées]
-        H --> I[Génération des Embeddings Textuels]
-        I --> J[Indexation vectorielle HNSW avec FAISS]
-        J --> K[Configuration du LLM Mistral et Chaîne QA]
-        K --> L[Requête / Question Utilisateur]
-        L --> M[Recherche par Similarité RAG]
-        M --> N[Génération de la Réponse et des Sources]
-    end
-
-    style P1 fill:#f9f,stroke:#333,stroke-width:2px
-    style P2 fill:#bbf,stroke:#333,stroke-width:2px
-
-```
+![Pipeline d'évaluation de performance'](imgs/rag_deroulement.jpg)
 
 # installation
 
@@ -75,6 +53,17 @@ graph TD
     uv run python mquestion4.py 
 
     uv run python mquestion5.py 
+
+
+    uv run python gquestion1.py 
+
+    uv run python gquestion2.py 
+
+    uv run python gquestion3.py 
+
+    uv run python gquestion4.py 
+
+    uv run python gquestion5.py 
 
 # test unitaire
 
