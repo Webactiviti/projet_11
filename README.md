@@ -82,6 +82,12 @@ graph TD
  1. Lancer la commande :  uv run python -m pytest -v
 
 
+## Mesure metrics RAGAS
+
+![Pipeline d'évaluation de performance'](imgs/evaluate_rag.jpg)
+
+
+
 ## 📂 Structure du Répertoire
 
 ```text
@@ -97,6 +103,7 @@ projet_11
 |         └── dico_data_opa.xls                     # dictionnaire  de données fichiers openagenda
 ├── openagenda.ipynb                                # notebook gestion data openagenda
 ├── app_rag.ipynb                                   # notebook gestion RAG et gestion avec Mistral
+├── evaluate_rag.py                                 # Mesure des temps de traitement RAGAS
 ├── example.env                                     # fichier exemple .env pour les clefs API
 ├── openagenda_V2.py                                # gestion data openagenda
 ├── app_rag_V2.py                                   # fichier gestion RAG
