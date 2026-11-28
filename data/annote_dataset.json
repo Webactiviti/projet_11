@@ -1,0 +1,30 @@
+[
+  {
+    "id_test": "q1_adoration",
+    "question": "Y a-t-il un temps d'adoration ou de prière à Paris pour entrer dans l'Avent ?",
+    "reference": "Oui, l'événement « 24h pour le Seigneur – Adoration » a lieu à l'Église Sainte-Jeanne de Chantal à Paris les 27 et 28 novembre (nuit d'adoration pour entrer dans l'Avent et la nouvelle année liturgique). Lien : https://openagenda.com/sainte-jeanne-de-chantal/events/62525807_24h-pour-le-seigneur-adoration",
+    "expected_event_id": 62525807,
+    "categorie": "recherche_thematique"
+  },
+  {
+    "id_test": "q2_benevolat",
+    "question": "Je cherche une matinée de bénévolat ou de chantier communautaire le samedi 28 novembre à Paris.",
+    "reference": "L'événement « Matinée de bénévolat - samedi 28 novembre 2026 » se déroule à l'Église Saint-Gervais-Saint-Protais à Paris le Samedi 28 novembre, 09h30, avec au programme des chantiers communautaires en préparation de l'Avent et un repas partagé. Lien : https://openagenda.com/jerusalem-paris/events/62892482_journee-des-benevoles-samedi-28-novembre-2026",
+    "expected_event_id": 62892482,
+    "categorie": "date_et_activite"
+  },
+  {
+    "id_test": "q3_celebration",
+    "question": "Quel événement célèbre Saint Louis et Saint François d'Assise à Paris fin novembre ?",
+    "reference": "L'événement « 800 ans après... » a lieu à l'Espace Bernanos à Paris les 28 et 29 novembre, autour de la célébration de Saint Louis et Saint François d'Assise. Lien : https://openagenda.com/espace-bernanos/events/7738969_800-ans-apres",
+    "expected_event_id": 7738969,
+    "categorie": "recherche_thematique"
+  },
+  {
+    "id_test": "q4_hors_domaine",
+    "question": "Quelle est la recette du pain au chocolat ?",
+    "reference": "Cette demande est hors du périmètre de la base d'événements culturels et locaux disponible.",
+    "expected_event_id": null,
+    "categorie": "hors_domaine"
+  }
+]
