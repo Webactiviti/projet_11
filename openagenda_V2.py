@@ -56,32 +56,51 @@ def fetch_events_for_agendas(agendas):
             
     return all_events
 
-
 def clean_and_format_events(all_events):
-    """Normalise les données, filtre les colonnes utiles et prépare le texte à vectoriser."""
+    """Normalise les données, supprime les doublons et prépare le texte à vectoriser."""
     if not all_events:
         return pd.DataFrame()
 
     df = pd.json_normalize(all_events)
-
-    # Utilisation de .reindex() pour éviter les erreurs KeyError si une colonne manque
     colonnes_utiles = [
-        'uid', 'title.fr', 'description.fr', 'dateRange.fr', 
-        'firstTiming.begin', 'firstTiming.end', 'location.name', 
-        'location.address', 'location.city', 'location.latitude', 
+        'uid', 'title.fr', 'description.fr', 'dateRange.fr',
+        'firstTiming.begin', 'firstTiming.end', 'location.name',
+        'location.address', 'location.city', 'location.latitude',
         'location.longitude', 'canonicalUrl'
     ]
-    
+
     df = df.reindex(columns=colonnes_utiles)
-    
     # Renommer les colonnes
     df.columns = [
-        'id', 'titre', 'description', 'date', 'heure debut', 
+        'id', 'titre', 'description', 'date', 'heure debut',
         'heure fin', 'lieu', 'adresse', 'ville', 'latitude', 'longitude', 'url'
     ]
+    # Remplacement des NaN par des chaînes vides et nettoyage des espaces superflus
+    df_clean = df.fillna("").apply(lambda col: col.str.strip() if col.dtype == "object" else col)
+    nb_initial = len(df_clean)
 
-    # Remplacement des NaN par des chaînes vides
-    df_clean = df.fillna("")
+    # Suppression des doublons sur l'ID (uniquement si l'ID est non vide)
+    has_id = df_clean['id'] != ""
+    df_avec_id = df_clean[has_id].drop_duplicates(subset=['id'], keep='first')
+    df_sans_id = df_clean[~has_id]
+    df_clean = pd.concat([df_avec_id, df_sans_id], ignore_index=True)
+
+    # Suppression des doublons fonctionnels (titre + date + lieu non vides)
+    has_business_key = (df_clean['titre'] != "") & (df_clean['date'] != "") & (df_clean['lieu'] != "")
+    df_avec_cle = df_clean[has_business_key].drop_duplicates(subset=['titre', 'date', 'lieu'], keep='first')
+    df_sans_cle = df_clean[~has_business_key]
+    df_clean = pd.concat([df_avec_cle, df_sans_cle], ignore_index=True)
+
+    nb_doublons_supprimes = nb_initial - len(df_clean)
+    print(f"Doublons supprimés : {nb_doublons_supprimes} ({len(df_clean)} événements conservés).")
+
+
+    nb_avant_filtre_ville = len(df_clean)
+    # Supprimer les lignes où la ville est vide 
+    df_clean = df_clean[df_clean['ville'].astype(str).str.strip() != ""].reset_index(drop=True)
+    nb_supprimes_ville = nb_avant_filtre_ville - len(df_clean)
+    print(f"Événements sans ville supprimés : {nb_supprimes_ville} ({len(df_clean)} conservés).")
+
 
     # Création du texte à vectoriser de manière propre
     df_clean['texte_a_vectoriser'] = (
@@ -106,7 +125,7 @@ if __name__ == "__main__":
     print("Nettoyage et formatage des données...")
     df_clean = clean_and_format_events(all_events)
 
-    # Assurez-vous que le dossier ./data existe avant d'enregistrer
+  
     os.makedirs("./data", exist_ok=True)
     df_clean.to_csv("./data/evenement.csv", index=False, encoding="utf-8")
     print("Fichier CSV enregistré avec succès dans ./data/evenement.csv.")
