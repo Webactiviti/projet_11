@@ -90,7 +90,9 @@ projet_11
 |         └── index.pkl  
 |    └── dico_data
 |         └── dico_data_opa.xls                     # dictionnaire  de données fichiers openagenda
+|         └── annote_dataset.json                   # json pour Q_R annote
 ├── openagenda.ipynb                                # notebook gestion data openagenda
+├── Q_R_Annote.py                                   # question / réponse annoté
 ├── app_rag.ipynb                                   # notebook gestion RAG et gestion avec Mistral
 ├── evaluate_rag.py                                 # Mesure des temps de traitement RAGAS
 ├── example.env                                     # fichier exemple .env pour les clefs API
