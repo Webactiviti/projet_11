@@ -28,7 +28,7 @@ def executer_requete_rag(question_utilisateur):
         allow_dangerous_deserialization=True
     )
 
-    # Configuration du Chatbot Gemini (modèle Flash / Flash-Lite éligible au palier gratuit)
+    # Configuration du Chatbot Gemini 
     llm = ChatGoogleGenerativeAI(
         model="gemini-3.5-flash-lite",
     )
@@ -38,7 +38,7 @@ def executer_requete_rag(question_utilisateur):
         search_kwargs={"k": 3}
     )
 
-    # Interrogation directe du retriever FAISS (k=3 par défaut dans votre code)
+    # Interrogation directe du retriever FAISS 
     documents_recuperes = retriever.invoke(question_utilisateur)
 
     print(f"Pour la question : « {question_utilisateur} »")
